@@ -9,8 +9,8 @@ int binary_search(int arr[], int el, int size)
     while (arr[index] != el){
         //printf("low: %d, high: %d, index: %d, element: %d\n", low, high, index, arr[index]);
         
-        if (high - index == 1)
-            return high;
+        if (arr[index + 1] == el)
+            return index + 1;
         if (el > arr[index]){
             low = index;
             index = (index + high) / 2;

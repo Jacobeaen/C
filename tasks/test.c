@@ -7,12 +7,10 @@ int main(void){
     int num2 = 0b10110111;
     int num16 = 0xB7;
 
-    int arr[] = {1, 2, 3, 4};
+    int x = 34;
+    int y = &x;
 
-    int *ptr = arr;
-
-    int size = sizeof(ptr);
-    printf("%d", size);
+    printf("%d", y);
 
     return 0;
 }
