@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(void){
 
@@ -7,10 +8,14 @@ int main(void){
     int num2 = 0b10110111;
     int num16 = 0xB7;
 
-    int x = 34;
-    int y = &x;
+    long long x = 34;
+    long long *ptr = &x;
+    long long y = (long long)&x;
 
-    printf("%d", y);
+   char a[100] = "ghjklljhgj";
+
+   int len = strlen(a); 
+   printf("%d", len);
 
     return 0;
 }
