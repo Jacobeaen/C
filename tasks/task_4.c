@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Массив из 10 случайных чисел, определение max, min и их индексов.
 void min_max(int arr[], int *maximum, int *max_i, int *minimum, int *min_i, size_t size)
 {
     *maximum = arr[0];

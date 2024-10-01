@@ -6,9 +6,7 @@ int binary_search(int arr[], int el, int size)
         return 0;
     
     int low = 0, index = size / 2, high = size - 1;
-    while (arr[index] != el){
-        //printf("low: %d, high: %d, index: %d, element: %d\n", low, high, index, arr[index]);
-        
+    while (arr[index] != el){        
         if (arr[index + 1] == el)
             return index + 1;
         if (el > arr[index]){
