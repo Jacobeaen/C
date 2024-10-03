@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define SIZE    1000
+#define SIZE    100
 
 char alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
