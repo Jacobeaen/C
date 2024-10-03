@@ -5,19 +5,9 @@
 
 char alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// All elements = '\0'
-void null(char arr[])
-{
-    for (int i = 0; i < SIZE; i++){
-        arr[i] = '\0';
-    }
-}
-
 // All -> base (long long)
 void all(long long num, int base, char arr[])
 {
-    null(arr);
-
     int negative = (num < 0) ? 1 : 0;
     num = (negative) ? -num : num;
 
@@ -36,6 +26,8 @@ void all(long long num, int base, char arr[])
     int j;
     for (j = 0; i > 0; j++, i--)
         arr[j] = arr[SIZE - i];
+    
+    arr[j] = '\0';
 }
 
 int main(void){
