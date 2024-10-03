@@ -2,258 +2,200 @@
 #include <stdbool.h>
 
 int main(void){
-    int byte;
-    int arr[10];
+    int bit;
+    long long arr[10];
     int i = 0;
 
-    printf("\033[2J]");
-    printf("SHORT\n");
-    char a = 0; byte = 1;
+
+    char a = 0;
     while (true){
         a = (a * 2) + 1; 
-        printf("number: %hhd  byte: %d\n", a, byte);
 
         a += 1;
         if (a < 0){
-            byte++;
-            printf("number: %hhd  byte: %d\n\n", a, byte);
-            arr[i] = byte;
+            bit++;
+            arr[i] = a;
             break;
         }
         else if (a == 0){
-            arr[i] = byte;
+            arr[i] = a          ;
             break;
         }
         a--;
         
-        byte++;
+        bit++;
     }
     i++;
 
-    printf("UNSIGNED SHORT\n");
-    unsigned char b = 0; byte = 1;
+    unsigned char b = 0;
     while (true){
         b = (b * 2) + 1; 
-        printf("number: %hhu  byte: %d\n", b, byte);
 
         b += 1;
         if (b < 0){
-            byte++;
-            arr[i] = byte;
+            arr[i] = b;
             break;
         }
         else if (b == 0){
-            arr[i] = byte;
+            arr[i] = b;
             break;
         }
         b--;
-        
-        byte++;
     }
-    printf("\n");
     i++;
 
-    printf("SHORT\n");
-    short c = 0; byte = 1;
+    short c = 0; bit = 1;
     while (true){
         c = (c * 2) + 1; 
-        printf("number: %hd  byte: %d\n", c, byte);
 
         c += 1;
         if (c < 0){
-            byte++;
-            printf("number: %hd  byte: %d\n\n", c, byte);
-            arr[i] = byte;
+            arr[i] = c;
             break;
         }
         else if (c == 0){
-            arr[i] = byte;
+            arr[i] = c;
             break;
         }
         c--;
-        
-        byte++;
     }
     i++;
 
-    printf("UNSIGNED SHORT\n");
-    unsigned short d = 0; byte = 1;
+    unsigned short d = 0;
     while (true){
         d = (d * 2) + 1; 
-        printf("number: %hu  byte: %d\n", d, byte);
 
         d += 1;
         if (d < 0){
-            byte++;
-            arr[i] = byte;
+            arr[i] = d;
             break;
         }
         else if (d == 0){
-            arr[i] = byte;
+            arr[i] = d;
             break;
         }
         d--;
-        
-        byte++;
     }
-    printf("\n");
     i++;
 
-    printf("INT\n");
-    int e = 0; byte = 1;
+    int e = 0;
     while (true){
         e = (e * 2) + 1; 
-        printf("number: %d  byte: %d\n", e, byte);
 
         e += 1;
         if (e < 0){
-            byte++;
-            printf("number: %d  byte: %d\n\n", e, byte);
-            arr[i] = byte;
+            arr[i] = e;
             break;
         }
         else if (e == 0){
-            arr[i] = byte;
+            arr[i] = e;
             break;
         }
         e--;
-        
-        byte++;
     }
     i++;
 
-    printf("UNSIGNED INT\n");
-    unsigned int f = 0; byte = 1;
+    unsigned int f = 0;
     while (true){
         f = (f * 2) + 1; 
-        printf("number: %u  byte: %d\n", f, byte);
-
         f += 1;
         if (f < 0){
-            byte++;
-            arr[i] = byte;
+            arr[i] = f;
             break;
         }
         else if (f == 0){
-            arr[i] = byte;
+            arr[i] = f;
             break;
         }
         f--;
-        
-        byte++;
     }
-    printf("\n");
     i++;
 
-    printf("LONG\n");
-    long g = 0; byte = 1;
+    long g = 0;
     while (true){
         g = (g * 2) + 1; 
-        printf("number: %ld  byte: %d\n", g, byte);
 
         g += 1;
         if (g < 0){
-            byte++;
-            printf("number: %ld  byte: %d\n", g, byte);
-            arr[i] = byte;
+            arr[i] = g;
             break;
         }
         else if (g == 0){
-            arr[i] = byte;
+            arr[i] = g;
             break;
         }
         g--;
-        
-        byte++;
     }
     i++;
-    printf("\n");
 
-    printf("UNSIGNED LONG\n");
-    unsigned long o = 0; byte = 1;
+    unsigned long o = 0;
     while (true){
         o = (o * 2) + 1; 
-        printf("number: %lu  byte: %d\n", o, byte);
 
         o += 1;
         if (o < 0){
-            arr[i] = byte;
-            byte++;
+            arr[i] = o;
             break;
         }
         else if (o == 0){
-            arr[i] = byte;
+            arr[i] = o;
             break;
         }
         o--;
-        
-        byte++;
     }
-    printf("\n");
     i++;
 
 
-    printf("LONG LONG\n");
-    long long j = 0; byte = 1;
+    long long j = 0;
     while (true){
         j = (j * 2) + 1; 
-        printf("number: %lld  byte: %d\n", j, byte);
 
         j += 1;
         if (j < 0){
-            byte++;
-            printf("number: %lld  byte: %d\n\n", j, byte);
-            arr[i] = byte;
+            arr[i] = j;
             break;
         }
         else if (j == 0){
-            arr[i] = byte;
+            arr[i] = j;
             break;
         }
         j--;
         
-        byte++;
+        bit++;
     }
     i++;
 
-    printf("UNSIGNED LONG LONG\n");
-    unsigned long long k = 0; byte = 1;
+    unsigned long long k = 0;
     while (true){
         k = (k * 2) + 1; 
-        printf("number: %llu  byte: %d\n", k, byte);
 
         k += 1;
         if (k < 0){
-            arr[i] = byte;
-            byte++;
+            arr[i] = k;
             break;
         }
         else if (k == 0){
-            arr[i] = byte;
+            arr[i] = k;
             break;
         }
         k--;
-        
-        byte++;
-    }
-    printf("\n");
+    }    
     
     
-    
-    printf("short bytes: %d\n", arr[0]);
-    printf("unsigned short bytes: %d\n\n", arr[1]);
+    printf("char: %hhd, %hhd\n", arr[0], arr[0] - 1);
+    printf("unsigned char: %hhu, %hhu\n\n", arr[1], arr[1] - 1);
 
-    printf("char bytes: %d\n", arr[2]);
-    printf("unsigned char bytes: %d\n\n", arr[3]);
+    printf("short: %hd, %hd\n", arr[2], arr[2] - 1);
+    printf("unsigned short: %hu, %hu\n\n", arr[3], arr[3] - 1);
 
-    printf("int bytes: %d\n", arr[4]);
-    printf("unsigned int bytes: %d\n\n", arr[5]);
+    printf("int bytes: %d, %d\n", arr[4], arr[4] - 1);
+    printf("unsigned int: %u, %u\n\n", arr[5], arr[5] - 1);
 
-    printf("long bytes: %d\n", arr[6]);
-    printf("unsigned long bytes: %d\n\n", arr[7]);
+    printf("long: %ld, %ld\n", arr[6], arr[6] - 1);
+    printf("unsigned long: %lu, %lu\n\n", arr[7], arr[7] - 1);
     
-    printf("long long bytes: %d\n", arr[8]);
-    printf("unsigned long long bytes: %d", arr[9]);
+    printf("long long: %lld, %lld\n", arr[8], arr[8] - 1);
+    printf("unsigned long long: %llu, %llu", arr[9], arr[9] - 1);
     return 0;
 }
     
