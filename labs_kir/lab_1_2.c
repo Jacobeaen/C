@@ -60,6 +60,5 @@ int main(void){
     all(e, 9, x);
     printf("unsigned long %s=%s 9", x_8, x);
 
-
     return 0;
 }
