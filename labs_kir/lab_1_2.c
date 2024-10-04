@@ -3,6 +3,11 @@
 
 #define SIZE    100
 
+/*
+Условие: перевести пять чисел a, b, c, d, e в соотвествующие системы счисления
+Ввывести результат в особом формате
+*/
+
 char alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 // All -> base (long long)
