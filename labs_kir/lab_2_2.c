@@ -26,11 +26,11 @@ int main(void)
 {
     char string[51];
     
-    int number1_int[50] = {0}, number1_float[50] = {0};
-    int number2_int[50] = {0}, number2_float[50] = {0};
-    int number3_int[50] = {0}, number3_float[50] = {0};
+    int number1_int[50] = {0}, number1_float[100] = {0};
+    int number2_int[50] = {0}, number2_float[100] = {0};
+    int number3_int[50] = {0}, number3_float[100] = {0};
 
-    fgets(string, 50, stdin);
+    fgets(string, 100, stdin);
 
     int plus = 0;
     int dot_1 = 0, dot_2 = 0;
@@ -39,10 +39,9 @@ int main(void)
     int num2_zero_int = 0;
 
     int int1_i = 0, float1_i = 0;
-    int float2_i = 0, int2_i = 0;
-
-    int i = 0;//, zero_index = NULL;
-
+    int float2_i = 0;
+    int int2_i = 0;
+    int i = 0;
     while (string[i] != '\n'){
         if (string[i] == '.' && !dot_1){
             dot_1 = i++;
@@ -64,9 +63,8 @@ int main(void)
                 if (dot_2)
                     number2_float[float2_i++] = string[i] - 48;
                 else{
-                    if (num2_zero_int){
+                    if (num2_zero_int)
                         number2_int[int2_i++] = string[i] - 48;
-                    }
                     else if (string[i] != '0' && !num2_zero_int){
                         num2_zero_int = 1;
                         number2_int[int2_i++] = string[i] - 48;
@@ -75,6 +73,8 @@ int main(void)
             }
             else            
                 number1_float[float1_i++] = string[i] - 48;
+
+        
         }
         else{
             if (num1_zero_int){
@@ -87,6 +87,8 @@ int main(void)
         }
     i++;
     }
+
+
 
 
     int max_float = max(float1_i, float2_i);
@@ -131,8 +133,14 @@ int main(void)
                 overflow_float_to_int++;
         }
 
+        if (index < extra_1) extra_1 = 0;
+        if (index < extra_2) extra_2 = 0;
+
         sum_dig = number1_int[index - extra_1] + number2_int[index - extra_2] + overflow_int + overflow_float_to_int;
         
+        if (extra_1) number1_int[index - extra_1] = 0;
+        if (extra_2) number2_int[index - extra_2] = 0;
+
         num3_in_dig = sum_dig % 10;
         overflow_int = sum_dig / 10;
         // printf("1:%d 2:%d o:%d i: %d\n", number1_int[index - extra_1], number2_int[index - extra_2], overflow_int, index);
@@ -147,6 +155,7 @@ int main(void)
     printf(".");
     
 
+
     int zero_index = 0, first_dig = 0;
     for (int j = max_float - 1; j >= 0; j--)
         if (number3_float[j] != 0 && !first_dig){
@@ -154,9 +163,9 @@ int main(void)
             break;
         }
 
+
     for (int k = 0; k <= zero_index; k++)
         printf("%d", number3_float[k]);
-    
-    
     return 0;
+
 }
