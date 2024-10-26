@@ -13,6 +13,7 @@
 >> 3
 
 */
+
 int min2(int x, int y)
 {
     return (x < y) ? x : y;
@@ -81,7 +82,6 @@ int main(void)
         }
     }
 
-    printf("\n");
     int count = 1;
     for (int i = 1; i < 10; i++){
         for (int j = 1; j < 12; j++){
@@ -90,11 +90,9 @@ int main(void)
             int right_y = right(arr, arr[i][j], size_j, i - 1, j + 1);
             
             int y = min3(left_y, bottom_y, right_y);
-            printf("i: %d, j: %d, lef: %d, bot: %d, rig: %d, y: %d\n", i, j, left_y, bottom_y, right_y, y);
 
             count = (y >= count) ? (y + 1) : count;
         }
-        printf("\n");
     }
 
     printf("%d", count);
