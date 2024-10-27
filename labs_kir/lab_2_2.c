@@ -21,7 +21,6 @@ int max(int x, int y){
     return (x > y) ? x : y;
 }
 
-
 int main(void)
 {
     char string[100];
@@ -177,8 +176,11 @@ int main(void)
     if (zero)
         printf("%d", 0);
     printf(".");
+    
     for (int k = 0; k <= zero_index; k++)
         printf("%d", number3_float[k]);
+
+
     return 0;
 
 }
