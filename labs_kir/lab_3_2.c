@@ -61,7 +61,6 @@ void write_in_result(char *str1, char* str2, char result[], int start_index, int
 
 int main(void)
 {
-
     char string1[50];
     char string2[50];
     char result[10000];
