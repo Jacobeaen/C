@@ -11,7 +11,6 @@
 0 0 1 0 0   Вниз: 1 <= 1 <= 1           | => 1 + 2 = 3
 0 0 1 0 0
 >> 3
-
 */
 
 int min2(int x, int y)
@@ -94,7 +93,8 @@ int main(void)
             count = (y >= count) ? (y + 1) : count;
         }
     }
-
     printf("%d", count);
+
+
     return 0;
 }
