@@ -4,21 +4,20 @@
 int* append(int arr[], int element, int *capacity, int size)
 {
     if (size >= *capacity){
-        int *new_arr = malloc(sizeof(int) * (*capacity) * 2);
+        int new_capacity = *capacity * 2;
+
+        int *new_arr = malloc(sizeof(int) * new_capacity);
 
         if (new_arr == NULL)
             return arr;
 
-        (*capacity) *= 2;
+        *capacity  = new_capacity;
         for (int i = 0; i < size; ++i){
             new_arr[i] = arr[i];
         }
-        new_arr[size] = element;
 
         free(arr);
         arr = new_arr;
-
-        return arr;
     }
 
     arr[size] = element;
@@ -50,10 +49,12 @@ int main(void)
 
         i++;
     }
+
     for (int j = 0; j < i; ++j){
         printf("%d ", arr[j]);
     }
 
     free(arr);
+
     return 0;
 }
