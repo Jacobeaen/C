@@ -3,7 +3,6 @@
 
 int main(void)
 {
-
     int arr[10];
     int size = sizeof(arr) / sizeof(arr[0]);
 
@@ -26,10 +25,10 @@ int main(void)
             }
 
         }
+
         tmp = min;
         arr[min_index] = arr[i];
         arr[i] = min;
-
     }
 
     for (int k = 0; k < size; ++k){
