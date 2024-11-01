@@ -19,14 +19,12 @@ int delete_duplicate(int arr[], int size)
         }
     }
 
-
     for (int i = 0; i < size_arr2; i++){
         arr[i] = arr2[i];
     }
 
     return size_arr2; 
 }
-
 
 int main(void)
 {
