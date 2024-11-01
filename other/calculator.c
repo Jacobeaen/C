@@ -2,7 +2,6 @@
 
 int main(void)
 {
-
     double num1, num2, count;
     char operation;
 
@@ -45,7 +44,5 @@ int main(void)
     printf("Result is %.2lf\n", count);
     printf("The end of the programm!");
     
-
-
     return 0;
 }
