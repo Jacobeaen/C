@@ -36,7 +36,6 @@ int main(void)
     printf("Enter elements of the array.\n");
     printf("For stop enter -1\n");
 
-
     int capacity = 4;
     
     int i = 0;
@@ -48,11 +47,11 @@ int main(void)
         i++;
     }
 
-    
     for (int j = 0; j < i; ++j){
         printf("%d ", arr[j]);
     }
 
     free(arr);
+    
     return 0;
 }
