@@ -259,7 +259,7 @@ int main()
                 size--;
 
                 break;
-
+                
             default:
                 printf("Sorry, incorrect choice!\nWrite number again.\n");
         }
