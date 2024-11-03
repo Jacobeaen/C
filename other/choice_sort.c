@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int main(void)
 {
+    srand(time(NULL));
+
     int arr[10];
     int size = sizeof(arr) / sizeof(arr[0]);
 
