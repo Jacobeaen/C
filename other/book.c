@@ -24,7 +24,6 @@ void clearBuffer(char *str)
     }
 }
 
-
 struct Book* expandArray(struct Book *array, int *capacity, bool *success)
 {
     
@@ -216,7 +215,7 @@ int main()
     while (choice != '5'){
         fgets(str, 30, stdin);
         if (strlen(str) == 2){
-            choice = str[0];
+            choice = (char)str[0];
         } else {
             choice = '6';
             clearBuffer(str);
