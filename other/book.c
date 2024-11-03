@@ -10,9 +10,28 @@ struct Book {
     double price;
 };
 
+void clear()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        {}
+}
+
+void clearBuffer(char *str)
+{
+    if (strlen(str) > 27){
+        clear();
+    }
+}
+
+
 struct Book* expandArray(struct Book *array, int *capacity, bool *success)
 {
+    
     int new_capacity = *capacity * 2;
+    if (*capacity == 0)
+        new_capacity = 1;
+
     struct Book *new_array = realloc(array, sizeof(struct Book) * new_capacity);
 
     *success = true;
@@ -25,10 +44,10 @@ struct Book* expandArray(struct Book *array, int *capacity, bool *success)
     return new_array;
 }
 
-
 void setBookName(char *name)
 {
     fgets(name, 29, stdin);
+    clearBuffer(name);
 }
 
 void setBook(char *name,
@@ -38,15 +57,19 @@ void setBook(char *name,
 {
     printf("Name: ");
     fgets(name, 29, stdin);
+    clearBuffer(name);
 
     printf("Author: ");
     fgets(author, 29, stdin);
+    clearBuffer(author);
 
     printf("Year: ");
     scanf("%d", year);
+    clear();
 
     printf("Price: ");
     scanf("%lf", price);
+    clear();
 }
 
 void showMenu(char *menu[], int size)
@@ -72,7 +95,6 @@ void addBook(struct Book array[],
     for (int i = 0; i < index; ++i){
         struct Book book = array[i];
 
-        // printf("name: %s, book_name: %s", name, book.name);
         if (strcmp(book.name, name) == 0){
             printf("Sorry, this book is already in your library!\n");
             *in_library = true;
@@ -143,14 +165,17 @@ struct Book* deleteBook(struct Book *array, char *name, int size, int del_index)
         return array;
     }
 
-    for (int i = 0; i < size; ++i){
+    int index = 0;
+    for (int i = 0; i < size; i++){
         if (i == del_index){
             continue;        
         }
 
-        new_array[i] = array[i];
+        new_array[index] = array[i];
+        index++;
     }
 
+    freeBook(&array[del_index]);
     free(array);
     array = new_array;
 
@@ -171,6 +196,7 @@ int main()
     int capacity = 1;
     struct Book *array = malloc(sizeof(struct Book) * capacity);
     
+    char str[30];
     char choice = '_';
 
     char name[30];
@@ -181,20 +207,26 @@ int main()
     int size = 0;
     char tmp = '1';
 
-    bool success;
-    bool is_deleted;
+    bool success = false;
+    bool is_deleted = false;
 
     showMenu(menu, 6);
     printf(">> ");
 
-    while (scanf("%c", &choice) == 1 && choice != '5'){
-        scanf("%c", &tmp);
+    while (choice != '5'){
+        fgets(str, 30, stdin);
+        if (strlen(str) == 2){
+            choice = str[0];
+        } else {
+            choice = '6';
+            clearBuffer(str);
+        }
+        
         bool in_library = false;
 
         switch (choice){
             case '1':
                 setBook(name, author, &year, &price);
-                scanf("%c", &tmp);
 
                 if (size >= capacity){
                     array = expandArray(array, &capacity, &success);
@@ -225,8 +257,9 @@ int main()
                     printf("Your library is empty\n");
                     break;
                 }
-
+                printf("Name: ");
                 setBookName(book_name);
+
                 printf("\n");
                 int answer = findBook(array, size, book_name, false);
                 
@@ -237,6 +270,14 @@ int main()
 
             case '4':
 
+                if (size == 0)
+                {
+                    printf("\n");
+                    printf("Your library is empty\n");
+                    break;
+                }
+
+                printf("Name: ");
                 setBookName(book_name);
 
                 int del_index = findBook(array, size, book_name, true);
@@ -248,15 +289,18 @@ int main()
                 char sure[3];
                 printf("Are you sure (y/n)?\n>> ");
                 fgets(sure, sizeof(sure), stdin);
-
-                if (strncmp(sure, "n", 1) == 0){
+                clearBuffer(sure);
+                if (strncmp(sure, "n", 1) == 0)
+                {
                     printf("Exit...\n");
                     break;
                 }
 
                 array = deleteBook(array, book_name, size, del_index);
                 printf("Book deleted from your library\n");
+                
                 size--;
+                capacity = size;
 
                 break;
                 
@@ -267,6 +311,13 @@ int main()
         printf("\n");
         showMenu(menu, 6);
         printf(">> ");
+    }
+
+    struct Book *book_clear;
+    for (int i = 0; i < size; ++i)
+    {
+        book_clear = &array[i];
+        freeBook(book_clear);
     }
 
     printf("\nEnd of the programm...");
