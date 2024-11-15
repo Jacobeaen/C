@@ -75,22 +75,30 @@ int main(void)
     int arr[11][13];
     int size_i = 11, size_j = 13;
 
-    for (int i = 0; i < 11; i++){
-        for (int j = 0; j < 13; j++){
+    for (int i = 0; i < size_i; i++){
+        for (int j = 0; j < size_j; j++){
             scanf("%d", &arr[i][j]);
         }
     }
 
     int count = 1;
-    for (int i = 1; i < 10; i++){
-        for (int j = 1; j < 12; j++){
+    for (int i = 1; i < size_i - 1; i++){
+        for (int j = 1; j < size_j - 1; j++){
+            int current = arr[i][j];
+
+            int next_left = arr[i-1][j-1];
+            int next_bottom = arr[i+1][j];
+            int next_right = arr[i-1][j+1];
+
             int left_y = left(arr, arr[i][j], i - 1, j - 1);
             int bottom_y = bottom(arr, arr[i][j], size_i, i + 1, j);
             int right_y = right(arr, arr[i][j], size_j, i - 1, j + 1);
             
-            int y = min3(left_y, bottom_y, right_y);
+            int y = 1;
+            y += min3(left_y, bottom_y, right_y);
 
-            count = (y >= count) ? (y + 1) : count;
+            if (y > count)
+                count = y;
         }
     }
     printf("%d", count);
