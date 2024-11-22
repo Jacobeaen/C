@@ -4,23 +4,22 @@
 #include <time.h>
 #include <string.h>
 
-
 int compares = 0;
 int swaps = 0;
 
 void Welcome();
 int fromFile(int *);
 int fromUser(int *);
+int (*enterMode(char *answer))(int *);
 void delSpace(char *);
 void printArrays(int *, int, char*);
-bool isNumber(char);
-int getNumber(int [], int, bool);
-int getNumbers(int [], FILE*);
 void copyNumbers(int [], int [], int, int);
-int* mergeSort(int [], int);
+int *mergeArrays(int array1[], int size1, int array2[], int size2);
+int *mergeSort(int[], int);
 
-int main(void)
-{    
+int main(void){
+    srand(time(NULL));
+
     int *array = malloc(sizeof(int) * 1000000);
 
     Welcome();
@@ -28,15 +27,14 @@ int main(void)
     char answer[100];
     fgets(answer, 100, stdin);
 
-    int size;
-    if (answer[0] == '1' && strlen(answer) == 2)
-        size = fromFile(array);
-    else if (answer[0] == '2' && strlen(answer) == 2)
-        size = fromUser(array);
-    else {
-        printf("Invalid input!");
+    // Возвращается fromFile или fromUser в зависимости от ввода
+    int (*Fill)(int *) = enterMode(answer);
+
+    if (Fill == NULL)
         return 0;
-    }
+
+    int size = Fill(array);
+
     if (size == -1)
         return 0;
 
@@ -63,9 +61,10 @@ int main(void)
 
 // Приветствие и выбор режима
 void Welcome(){
-    puts("Choose mode of programm:");
+    puts("Choose Fill of programm:");
     puts("1. Numbers from file");
-    puts("2. Numbers from cli");    
+    puts("2. Numbers from cli");
+    puts("3. Numbers from PC (random)"); 
     printf(">> ");
 }
 
@@ -79,12 +78,15 @@ int fromFile(int *array){
 
     FILE *file = fopen(filename, "r");
     if (file == NULL){
-        printf("Wrong name, try again");
+        printf("Invalid name of file!");
         return -1;
     }
 
-    int size = getNumbers(array, file);
-    
+    int size = 0;
+    while (!feof(file)){
+        fscanf(file, "%d", &array[size++]);
+    }
+
     return size;
 }
 
@@ -107,6 +109,40 @@ int fromUser(int *array){
     return size;
 }
 
+int fromPC(int *array){
+    int size;
+
+    printf("Enter amount of numbers: ");
+    scanf("%d", &size);
+
+    if (size <= 0)
+    {
+        printf("Number must be positive");
+        return -1;
+    }
+
+    for (int i = 0; i < size; ++i){
+        array[i] = rand() % RAND_MAX - 16383;
+    }
+
+    return size;
+}
+
+// Возвращаем режим, с помощью которого будет заполняться массив
+int (*enterMode(char *answer))(int *){
+    if (answer[0] == '1' && strlen(answer) == 2)
+        return fromFile;
+    else if (answer[0] == '2' && strlen(answer) == 2)
+        return fromUser;
+    else if (answer[0] == '3' && strlen(answer) == 2)
+        return fromPC;
+    else{
+        printf("Invalid input!");
+        return NULL; 
+    }
+}
+
+// Выовд массивов
 void printArrays(int *array, int size, char *type){
     printf("%s array: ", type);
 
@@ -158,73 +194,6 @@ int *mergeArrays(int array1[], int size1, int array2[], int size2){
     }
 
     return array;
-}
-
-// Заполняем массив чисел из файла
-int getNumbers(int array[], FILE *file)
-{
-    int i = 0;
-    int j = 0;
-
-    int number[100];
-    bool negative = false;
-
-    char digit;
-    while (true)
-    {
-        digit = fgetc(file);
-        
-        if (digit == '-'){
-            negative = true;
-        }
-
-        if (isNumber(digit))
-        {
-            number[i] = digit - '0';
-            i++;
-        }
-        else if (digit == ' ' || digit == EOF)
-        {
-            array[j++] = getNumber(number, i, negative);
-
-            i = 0;
-            negative = false;
-
-            if (digit == EOF)
-            {
-                break;
-            }
-        }
-    }
-
-    return j;
-}
-
-// Проверка символа на число
-bool isNumber(char symbol)
-{
-    return symbol >= 48 && symbol <= 57;
-}
-
-// Получение числа из массива, в который записываются символы
-int getNumber(int array[], int size, bool negative)
-{
-    int i = 1;
-
-    int number = 0;
-    for (int j = size - 1; j >= 0; j--)
-    {
-        int digit = array[j];
-
-        number = number + digit * i;
-
-        i *= 10;
-    }
-
-    if (negative)
-        return -number;
-
-    return number;
 }
 
 // Копирование чисел из осного массива в левую/правую часть
