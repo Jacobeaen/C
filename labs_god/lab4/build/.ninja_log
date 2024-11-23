@@ -1,0 +1,26 @@
+# ninja log v6
+14	85	7540921051842528	CMakeFiles/Sorts.dir/choice_sort/choice_funcs.c.obj	54ab8b416345c6b5
+11	227	7540921051803291	CMakeFiles/Sorts.dir/merge_sort/merge_funcs.c.obj	42d72202178bbd1c
+2	305	7540921051694108	CMakeFiles/Sorts.dir/main.c.obj	313cc7ce9d03ede3
+7	116	7540923511977317	CMakeFiles/Sorts.dir/merge_sort/merge_funcs.c.obj	42d72202178bbd1c
+28	108	7540923651586617	CMakeFiles/Sorts.dir/general_functions/general_funcs.c.obj	e6a0dc7d27f8965f
+108	223	7540923652487973	Sorts.exe	3e881d91e4888d0f
+13	165	7540943253749742	CMakeFiles/Sorts.dir/merge_sort/merge_funcs.c.obj	42d72202178bbd1c
+5	172	7540943253695763	CMakeFiles/Sorts.dir/main.c.obj	313cc7ce9d03ede3
+17	185	7540943253825058	CMakeFiles/Sorts.dir/choice_sort/choice_funcs.c.obj	54ab8b416345c6b5
+17	98	7540943429989177	CMakeFiles/Sorts.dir/general_functions/general_funcs.c.obj	e6a0dc7d27f8965f
+99	183	7540943430758870	Sorts.exe	3e881d91e4888d0f
+13	147	7540945832068757	CMakeFiles/Sorts.dir/merge_sort/merge_funcs.c.obj	42d72202178bbd1c
+9	150	7540945832022725	CMakeFiles/Sorts.dir/general_functions/general_funcs.c.obj	e6a0dc7d27f8965f
+4	80	7540950056190260	CMakeFiles/Sorts.dir/main.c.obj	313cc7ce9d03ede3
+81	157	7540950056921076	Sorts.exe	3e881d91e4888d0f
+30	135	7540950961429927	CMakeFiles/Sorts.dir/general_functions/general_funcs.c.obj	e6a0dc7d27f8965f
+136	211	7540950962562336	Sorts.exe	3e881d91e4888d0f
+41	126	7541018667628082	CMakeFiles/Sorts.dir/choice_sort/choice_funcs.c.obj	54ab8b416345c6b5
+36	175	7541018667569361	CMakeFiles/Sorts.dir/general_functions/general_funcs.c.obj	e6a0dc7d27f8965f
+34	101	7541019942216772	CMakeFiles/Sorts.dir/choice_sort/choice_funcs.c.obj	54ab8b416345c6b5
+33	102	7541020071891670	CMakeFiles/Sorts.dir/main.c.obj	313cc7ce9d03ede3
+103	186	7541020072641329	Sorts.exe	3e881d91e4888d0f
+37	144	7541021752387464	CMakeFiles/Sorts.dir/main.c.obj	313cc7ce9d03ede3
+41	146	7541021752468763	CMakeFiles/Sorts.dir/merge_sort/merge_funcs.c.obj	42d72202178bbd1c
+147	222	7541021753518545	Sorts.exe	3e881d91e4888d0f
