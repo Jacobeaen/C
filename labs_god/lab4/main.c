@@ -10,6 +10,9 @@
 #include "choice_sort/choice_funcs.h"
 #include "shell_sort/shell_funcs.h"
 
+int a = 5; //data
+int b; //bss
+
 int main(void){
     srand(time(NULL));
 
@@ -27,22 +30,19 @@ int main(void){
     if (Fill == NULL)
         return 0;
 
-    int size_choice = Fill(array_choice);
-    if (size_choice == -1)
+    int size = Fill(array_choice);
+    if (size == -1)
         return 0;
 
-    int size_merge = size_choice;
-    int size_shell = size_choice;
+    copyArray(array_choice, array_merge, size);
+    copyArray(array_choice, array_shell, size);
 
-    copyArray(array_choice, array_merge, size_choice);
-    copyArray(array_choice, array_shell, size_choice);
-
-    printArrays(array_choice, size_choice, "Source");
+    printArrays(array_choice, size, "Source");
     printf("\n");
 
-    sortAndPrintStatistics(array_merge, size_merge, mergeSort, "Merge sort");
-    sortAndPrintStatistics(array_choice, size_choice, choiceSort, "Choice sort");
-    sortAndPrintStatistics(array_shell, size_shell, shellSort, "Shell sort");
+    sortAndPrintStatistics(array_merge, size, mergeSort, "Merge sort");
+    sortAndPrintStatistics(array_choice, size, choiceSort, "Choice sort");
+    sortAndPrintStatistics(array_shell, size, shellSort, "Shell sort");
 
     free(array_choice);
     free(array_merge);
