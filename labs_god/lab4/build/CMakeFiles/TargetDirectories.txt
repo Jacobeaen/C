@@ -1,0 +1,3 @@
+C:/Users/Alex/Code/Files/Code/C/labs_god/lab4/build/CMakeFiles/Sorts.dir
+C:/Users/Alex/Code/Files/Code/C/labs_god/lab4/build/CMakeFiles/edit_cache.dir
+C:/Users/Alex/Code/Files/Code/C/labs_god/lab4/build/CMakeFiles/rebuild_cache.dir

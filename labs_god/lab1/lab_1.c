@@ -6,7 +6,6 @@ int main(void){
     long long arr[10];
     int i = 0;
 
-
     char a = 0;
     while (true){
         a = (a * 2) + 1; 
@@ -18,7 +17,7 @@ int main(void){
             break;
         }
         else if (a == 0){
-            arr[i] = a          ;
+            arr[i] = a;
             break;
         }
         a--;
@@ -196,7 +195,7 @@ int main(void){
     
     printf("long long: %lld, %lld\n", arr[8], arr[8] - 1);
     printf("unsigned long long: %llu, %llu", arr[9], arr[9] - 1);
+
+    
     return 0;
 }
-    
-    
