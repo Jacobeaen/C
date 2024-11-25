@@ -128,20 +128,20 @@ void printArrays(int *array, int size, char *type)
 }
 
 // Сортируем массив и возвращаем время сортировки
-void sortAndPrintStatistics(int *array, int size, int* (*sort)(int*, int, int*, int*), char *sort_name){
+void sortAndPrintStatistics(int *array, int size, int* (*sort)(int*, int, long long*, long long*), char *sort_name){
+
+    long long compares = 0;
+    long long swaps = 0;
+
     clock_t start = clock();
-
-    int compares = 0;
-    int swaps = 0;
-
     array = sort(array, size, &compares, &swaps);
     clock_t end = clock();
 
-    double time = (double)((end - start) / CLOCKS_PER_SEC) * 1000;
+    int time =(int)(((double)(end - start)) / CLOCKS_PER_SEC * 1000);
 
     printf("%s:\n", sort_name);
-    printArrays(array, size, "Sorted");
-    printf("\nTime: %lf\n", time);
-    printf("Compares: %d\n", compares);
-    printf("Swaps: %d\n\n", swaps);
+    //printArrays(array, size, "Sorted");
+    printf("Time: %d ms\n", time);
+    printf("Compares: %lld\n", compares);
+    printf("Swaps: %lld\n\n", swaps);
 }

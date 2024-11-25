@@ -10,6 +10,6 @@ int fromPC(int *array);
 int (*enterMode(char *answer))(int *);
 void copyArray(int src[], int dst[], int size);
 void printArrays(int *array, int size, char *type);
-void sortAndPrintStatistics(int *array, int size, int* (*sort)(int*, int, int*, int*), char *sort_name);
+void sortAndPrintStatistics(int *array, int size, int* (*sort)(int*, int, long long*, long long*), char *sort_name);
 
 #endif
