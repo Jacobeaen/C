@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // Слияние двух упорадоченных массивов в один отсортированный
-int* mergeArrays(int array1[], int size1, int array2[], int size2, int *compares, int *swaps)
+int* mergeArrays(int array1[], int size1, int array2[], int size2, long long *compares, long long *swaps)
 {
     int *array = malloc(sizeof(int) * (size1 + size2));
 
@@ -48,7 +48,7 @@ void copyNumbers(int src_array[], int dst_array[], int start, int stop)
 }
 
 // Сортировка слиянием
-int* mergeSort(int array[], int size, int *compares, int *swaps)
+int* mergeSort(int array[], int size, long long *compares, long long *swaps)
 {
     size_t left_size = size / 2;
     size_t right_size = size - left_size;
