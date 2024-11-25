@@ -1,5 +1,5 @@
 // Индекс минимального элемента в неотсортированной части массива
-int findMin(int array[], int size, long long start, long long *compares)
+int findMin(int array[], int size, int start, long long *compares)
 {
     int min = array[start];
     int index = start;
