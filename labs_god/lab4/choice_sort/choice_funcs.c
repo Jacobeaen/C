@@ -1,5 +1,5 @@
 // Индекс минимального элемента в неотсортированной части массива
-int findMin(int array[], int size, int start, int *compares)
+int findMin(int array[], int size, long long start, long long *compares)
 {
     int min = array[start];
     int index = start;
@@ -26,7 +26,7 @@ void Swap(int array[], int i, int j)
 }
 
 // Сортировка выбором
-int* choiceSort(int array[], int size, int *compares, int *swaps)
+int* choiceSort(int array[], int size, long long *compares, long long *swaps)
 {
     for (int i = 0; i < size - 1; ++i){
         int min_index = findMin(array, size, i, compares);
