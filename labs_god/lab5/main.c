@@ -24,40 +24,19 @@ enum error {
     not_found = -1
 };
 
-int main(void)
+int main(int argc, char** argv)
 {
-    char filename_in[max_file_len];
-    char filename_out[max_file_len];
-
-    char words_to_replace[max_file_len];
-    char replacement_words[max_file_len];
-    
-    printf("Enter name of the source file:\n");
-    printf(">> ");
-    fgets(filename_in, max_file_len, stdin);
-    delSpace(filename_in);
-
-    printf("Enter words_to_replace file (which we change):\n");
-    printf(">> ");
-    fgets(words_to_replace, max_file_len, stdin);
-    delSpace(words_to_replace);
-
-    printf("Enter words_to_replace file (on which we change):\n");
-    printf(">> ");
-    fgets(replacement_words, max_file_len, stdin);
-    delSpace(replacement_words);
-
-    printf("Enter filename that will be result:\n");
-    printf(">> ");
-    fgets(filename_out, max_file_len, stdin);
-    delSpace(filename_out);
+    if (argc != 5){
+        puts("Invalid amount of paremetrs");
+        return 0;
+    }
 
     // words1 - слова, которые надо заменить, size одинаковый
     // words2 - слова, на которые мы заменяем слова из words1
-    FILE *file_in = fopen(filename_in, "r");
-    FILE *words1 = fopen(words_to_replace, "r");
-    FILE *words2 = fopen(replacement_words, "r");
-    FILE *file_out = fopen(filename_out, "w");
+    FILE *file_in = fopen(argv[1], "r");
+    FILE *words1 = fopen(argv[2], "r");
+    FILE *words2 = fopen(argv[3], "r");
+    FILE *file_out = fopen(argv[4], "w");
 
     printError(file_in);
     printError(words1);
@@ -214,6 +193,7 @@ void printError(FILE *file){
     if (file == NULL){
         puts("Sorry, this file doesn't exist or access is restricted.");
         puts("End of the programm...");
+        exit(0);
     }
 }
 
