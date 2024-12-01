@@ -13,6 +13,7 @@ void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_
 void setZeros(char word[], size_t size);
 int getIndex(char *word, char *array[], size_t size);
 void setFree(char *array[], size_t size);
+void printError(FILE *file);
 
 enum lenght {
     max_file_len = 100,
@@ -51,25 +52,37 @@ int main(void)
     fgets(filename_out, max_file_len, stdin);
     delSpace(filename_out);
 
-    // file_1 - слова, которые надо заменить, size одинаковый
-    FILE *file_1 = fopen(words_to_replace, "r");
-    size_t size = getWordsAmount(file_1);
-    fseek(file_1, 0, SEEK_SET);
-    char *array_1[size];
-    AppendWordsInArray(file_1, array_1, size);
-
-    // file_2 - слова, на которые мы заменяем
-    FILE *file_2 = fopen(replacement_words, "r");
-    char *array_2[size];
-    AppendWordsInArray(file_2, array_2, size);
-
+    // words1 - слова, которые надо заменить, size одинаковый
+    // words2 - слова, на которые мы заменяем слова из words1
     FILE *file_in = fopen(filename_in, "r");
+    FILE *words1 = fopen(words_to_replace, "r");
+    FILE *words2 = fopen(replacement_words, "r");
     FILE *file_out = fopen(filename_out, "w");
+
+    printError(file_in);
+    printError(words1);
+    printError(words2);
+    printError(file_out);
+
+    size_t size = getWordsAmount(words1);
+    rewind(words1);
+    //fseek(words1, 0, SEEK_SET);
+
+    char *array_1[size];
+    AppendWordsInArray(words1, array_1, size);
+
+    char *array_2[size];
+    AppendWordsInArray(words2, array_2, size);
 
     ChangeAndPrint(file_in, file_out, array_1, array_2, size);
     
     setFree(array_1, size);
     setFree(array_2, size);
+
+    fclose(file_in);
+    fclose(words1);
+    fclose(words2);
+    fclose(file_out);
 
     return 0;
 }
@@ -110,7 +123,7 @@ int getWordsAmount(FILE *file){
     return i;
 }
 
-// Заполняем массив слова из file_1/file_2
+// Заполняем массив слова из words1/words2
 void AppendWordsInArray(FILE *file, char *array[], size_t size){
     char string[max_word_len];
 
@@ -172,14 +185,17 @@ void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_
             
             // Если слово найдено - заменяем
             if (index != -1)
-                printf("%s", array_2[index]);
+                //printf("%s", array_2[index]);
+                fprintf(file_out, "%s", array_2[index]);
             else
-                printf("%s", word);
+                //printf("%s", word);
+                fprintf(file_out, "%s", word);
 
             if (symbol == EOF)
                 return;
 
-            printf("%c", symbol);
+            //printf("%c", symbol);
+            fprintf(file_out, "%c", symbol);
 
             setZeros(word, strlen(word));
             i = 0;
@@ -191,6 +207,13 @@ void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_
 void setFree(char *array[], size_t size){
     for (int i = 0; i < size; i++){
         free(array[i]);
+    }
+}
+
+void printError(FILE *file){
+    if (file == NULL){
+        puts("Sorry, this file doesn't exist or access is restricted.");
+        puts("End of the programm...");
     }
 }
 
