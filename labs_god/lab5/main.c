@@ -152,12 +152,12 @@ void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_
     while (true){
         symbol = getc(file_in);
 
-        if (isgraph(symbol)){
+        if (isalpha(symbol)){
             word[i++] = symbol;
-        }
-        
+        }        
 
-        else if (isspace(symbol) || symbol == EOF){
+
+        else if (isgraph(symbol) || isspace(symbol) || symbol == EOF){
             word[i] = '\0';
 
             int index = getIndex(word, array_1, size);
