@@ -152,12 +152,12 @@ void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_
     while (true){
         symbol = getc(file_in);
 
-        if (isalpha(symbol)){
+        if (isalnum(symbol)){
             word[i++] = symbol;
         }        
 
 
-        else if (isgraph(symbol) || isspace(symbol) || symbol == EOF){
+        else if (ispunct(symbol) || isspace(symbol) || symbol == EOF){
             word[i] = '\0';
 
             int index = getIndex(word, array_1, size);
