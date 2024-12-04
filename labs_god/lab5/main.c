@@ -6,11 +6,11 @@
 
 void delSpace(char *);
 void copyWords(char *src, char *dst);
-void AppendWordsInArray(FILE *file, char *array[], size_t size);
+void appendWordsInArray(FILE *file, char *array[], size_t size);
 void printArray(char *array[], size_t size);
 int getWordsAmount(FILE *file);
-void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size);
-void setZeros(char word[], size_t size);
+void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size);
+void Clear(char word[], size_t size);
 int getIndex(char *word, char *array[], size_t size);
 void setFree(char *array[], size_t size);
 void printError(FILE *file);
@@ -48,12 +48,12 @@ int main(int argc, char** argv)
     //fseek(words1, 0, SEEK_SET);
 
     char *array_1[size];
-    AppendWordsInArray(words1, array_1, size);
+    appendWordsInArray(words1, array_1, size);
 
     char *array_2[size];
-    AppendWordsInArray(words2, array_2, size);
+    appendWordsInArray(words2, array_2, size);
 
-    ChangeAndPrint(file_in, file_out, array_1, array_2, size);
+    changeAndWrite(file_in, file_out, array_1, array_2, size);
     
     setFree(array_1, size);
     setFree(array_2, size);
@@ -103,7 +103,7 @@ int getWordsAmount(FILE *file){
 }
 
 // Заполняем массив слова из words1/words2
-void AppendWordsInArray(FILE *file, char *array[], size_t size){
+void appendWordsInArray(FILE *file, char *array[], size_t size){
     char string[max_word_len];
 
     int len;
@@ -124,7 +124,7 @@ void AppendWordsInArray(FILE *file, char *array[], size_t size){
 }
 
 // Обнуляем массив (все элементы '\0')
-void setZeros(char word[], size_t size){
+void Clear(char word[], size_t size){
     for (int i = 0; i < size; i++){
         word[i] = '\0';
     }
@@ -143,7 +143,7 @@ int getIndex(char *word, char *array[], size_t size){
 }
 
 // Записываем слова в файл file_out.txt
-void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size){
+void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size){
     char word[max_word_len];
 
     char symbol;
@@ -176,7 +176,7 @@ void ChangeAndPrint(FILE *file_in, FILE *file_out, char *array_1[], char *array_
             //printf("%c", symbol);
             fprintf(file_out, "%c", symbol);
 
-            setZeros(word, strlen(word));
+            Clear(word, strlen(word));
             i = 0;
         }
     }
@@ -189,6 +189,7 @@ void setFree(char *array[], size_t size){
     }
 }
 
+// Проверка на ошибки открытия файла
 void printError(FILE *file){
     if (file == NULL){
         puts("Sorry, this file doesn't exist or access is restricted.");
