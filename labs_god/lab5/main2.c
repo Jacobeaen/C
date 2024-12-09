@@ -11,122 +11,17 @@ enum error {
     not_found = -1
 };
 
-// Проверка на ошибки открытия файла
-void printError(FILE *file)
-{
-    if (file == NULL){
-        puts("Sorry, this file doesn't exist or access is restricted.");
-        puts("End of the programm...");
-        exit(0);
-    }
-}
-
-// Обнуляем массив (все элементы '\0')
-void Clear(char word[], size_t size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        word[i] = '\0';
-    }
-}
-
-// Удаление \n в конце строки после fgets
-void delSpace(char *string)
-{
-    int i = 0;
-    while (string[i] != '\n' && string[i] != '\0')
-    {
-        i++;
-    }
-    string[i] = '\0';
-}
-
-// Подсчет количества слов в файле
-int getWordsAmount(FILE *file)
-{
-    char word[MAX_WORD_LEN];
-    int count = 0;
-
-    while (fscanf(file, "%s", word) != EOF)
-    {
-        count++;
-    }
-
-    return count;
-}
-
-// Заполняем массив слова из words1/words2
-void appendWordsInArray(FILE *file, char array[][MAX_WORD_LEN], size_t size)
-{
-    char string[MAX_WORD_LEN];
-    int i = 0;
-
-    while (fgets(string, MAX_WORD_LEN, file) && i < size)
-    {
-        delSpace(string);
-        strncpy(array[i], string, MAX_WORD_LEN - 1);
-        array[i][MAX_WORD_LEN - 1] = '\0';
-        i++;
-    }
-}
-
-// Индекс слова, если его надо заменить, -1 в противном случае
-int getIndex(char *word, char array[][MAX_WORD_LEN], size_t size)
-{
-    for (int i = 0; i < size; i++){
-        if (strcmp(word, array[i]) == 0){
-            return i;
-        }
-    }
-
-    return not_found;
-}
-
-// Записываем слова в файл file_out.txt
-void changeAndWrite(FILE *file_in, FILE *file_out, char words1[][MAX_WORD_LEN], char words2[][MAX_WORD_LEN], size_t size)
-{
-    char word[MAX_WORD_LEN];
-    char symbol;
-    int i = 0;
-
-    while (true){
-        symbol = getc(file_in);
-
-        if (isalnum(symbol)){
-            word[i++] = symbol;
-        }
-
-        else if (ispunct(symbol) || isspace(symbol) || symbol == EOF){
-            word[i] = '\0';
-
-            int index = getIndex(word, words1, size);
-
-            if (index != -1)
-                fprintf(file_out, "%s", words2[index]);
-            else
-                fprintf(file_out, "%s", word);
-
-            if (symbol == EOF)
-                return;
-
-            
-            fprintf(file_out, "%c", symbol);
-            Clear(word, strlen(word));
-            
-            i = 0;
-        }
-    }
-
-    word[i] = '\0';
-    if (strlen(word) > 0){
-        int index = getIndex(word, words1, size);
-
-        if (index != -1)
-            fprintf(file_out, "%s", words2[index]);
-        else
-            fprintf(file_out, "%s", word);
-    }
-}
+void copyWords(char *src, char *dst);
+void delSpace(char *);
+void copyWords(char *src, char *dst);
+void appendWordsInArray(FILE *file, char array[][MAX_WORD_LEN], size_t size);
+void printArray(char *array[], size_t size);
+int getWordsAmount(FILE *file);
+void changeAndWrite(FILE *file_in, FILE *file_out, char words1[][MAX_WORD_LEN], char words2[][MAX_WORD_LEN], size_t size);
+void Clear(char word[], size_t size);
+int getIndex(char *word, char array[][MAX_WORD_LEN], size_t size);
+void setFree(char *array[], size_t size);
+void printError(FILE *file);
 
 int main(int argc, char **argv)
 {
@@ -164,4 +59,132 @@ int main(int argc, char **argv)
     fclose(file_out);
 
     return 0;
+}
+
+// Проверка на ошибки открытия файла
+void printError(FILE *file)
+{
+    if (file == NULL)
+    {
+        puts("Sorry, this file doesn't exist or access is restricted.");
+        puts("End of the programm...");
+        exit(0);
+    }
+}
+
+// Обнуляем массив (все элементы '\0')
+void Clear(char word[], size_t size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        word[i] = '\0';
+    }
+}
+
+// Удаление \n в конце строки после fgets
+void delSpace(char *string)
+{
+    int i = 0;
+    while (string[i] != '\n' && string[i] != '\0')
+    {
+        i++;
+    }
+    string[i] = '\0';
+}
+
+// Подсчет количества слов в файле
+int getWordsAmount(FILE *file)
+{
+    char word[MAX_WORD_LEN];
+    
+    int count = 0;
+    while (fscanf(file, "%s", word) != EOF){
+        count++;
+    }
+
+    return count;
+}
+
+// Копируем слово из одного массива в другой вместе с '\0'
+void copyWords(char *src, char *dst)
+{
+    int i = 0;
+    while ((dst[i] = src[i]) != '\0')
+        i++;
+}
+
+// Заполняем массив слова из words1/words2
+void appendWordsInArray(FILE *file, char array[][MAX_WORD_LEN], size_t size)
+{
+    char string[MAX_WORD_LEN];
+    
+    int i = 0;
+    while (fgets(string, MAX_WORD_LEN, file) && i < size){
+        delSpace(string);
+
+        strncpy(array[i], string, MAX_WORD_LEN - 1);
+        i++;
+    }
+}
+
+// Индекс слова, если его надо заменить, -1 в противном случае
+int getIndex(char *word, char array[][MAX_WORD_LEN], size_t size)
+{
+    for (int i = 0; i < size; i++){
+        if (strcmp(word, array[i]) == 0)
+        {
+            return i;
+        }
+    }
+
+    return not_found;
+}
+
+// Записываем слова в файл file_out.txt
+void changeAndWrite(FILE *file_in, FILE *file_out, char words1[][MAX_WORD_LEN], char words2[][MAX_WORD_LEN], size_t size)
+{
+    char word[MAX_WORD_LEN];
+    char symbol;
+    int i = 0;
+
+    while (true)
+    {
+        symbol = getc(file_in);
+
+        if (isalnum(symbol))
+        {
+            word[i++] = symbol;
+        }
+
+        else if (ispunct(symbol) || isspace(symbol) || symbol == EOF)
+        {
+            word[i] = '\0';
+
+            int index = getIndex(word, words1, size);
+
+            if (index != -1)
+                fprintf(file_out, "%s", words2[index]);
+            else
+                fprintf(file_out, "%s", word);
+
+            if (symbol == EOF)
+                return;
+
+            fprintf(file_out, "%c", symbol);
+            Clear(word, strlen(word));
+
+            i = 0;
+        }
+    }
+
+    word[i] = '\0';
+    if (strlen(word) > 0)
+    {
+        int index = getIndex(word, words1, size);
+
+        if (index != -1)
+            fprintf(file_out, "%s", words2[index]);
+        else
+            fprintf(file_out, "%s", word);
+    }
 }
