@@ -25,8 +25,7 @@ void printError(FILE *file);
 
 int main(int argc, char **argv)
 {
-    if (argc != 5)
-    {
+    if (argc != 5){
         puts("Invalid amount of parameters");
         return 0;
     }
@@ -75,8 +74,7 @@ void printError(FILE *file)
 // Обнуляем массив (все элементы '\0')
 void Clear(char word[], size_t size)
 {
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++){
         word[i] = '\0';
     }
 }
@@ -85,10 +83,10 @@ void Clear(char word[], size_t size)
 void delSpace(char *string)
 {
     int i = 0;
-    while (string[i] != '\n' && string[i] != '\0')
-    {
+    while (string[i] != '\n' && string[i] != '\0'){
         i++;
     }
+
     string[i] = '\0';
 }
 
@@ -103,14 +101,6 @@ int getWordsAmount(FILE *file)
     }
 
     return count;
-}
-
-// Копируем слово из одного массива в другой вместе с '\0'
-void copyWords(char *src, char *dst)
-{
-    int i = 0;
-    while ((dst[i] = src[i]) != '\0')
-        i++;
 }
 
 // Заполняем массив слова из words1/words2
@@ -131,8 +121,7 @@ void appendWordsInArray(FILE *file, char array[][MAX_WORD_LEN], size_t size)
 int getIndex(char *word, char array[][MAX_WORD_LEN], size_t size)
 {
     for (int i = 0; i < size; i++){
-        if (strcmp(word, array[i]) == 0)
-        {
+        if (strcmp(word, array[i]) == 0){
             return i;
         }
     }
@@ -151,13 +140,11 @@ void changeAndWrite(FILE *file_in, FILE *file_out, char words1[][MAX_WORD_LEN], 
     {
         symbol = getc(file_in);
 
-        if (isalnum(symbol))
-        {
+        if (isalnum(symbol)) {
             word[i++] = symbol;
         }
 
-        else if (ispunct(symbol) || isspace(symbol) || symbol == EOF)
-        {
+        else if (ispunct(symbol) || isspace(symbol) || symbol == EOF){
             word[i] = '\0';
 
             int index = getIndex(word, words1, size);
@@ -178,8 +165,7 @@ void changeAndWrite(FILE *file_in, FILE *file_out, char words1[][MAX_WORD_LEN], 
     }
 
     word[i] = '\0';
-    if (strlen(word) > 0)
-    {
+    if (strlen(word) > 0){
         int index = getIndex(word, words1, size);
 
         if (index != -1)
