@@ -43,11 +43,10 @@ int main(int argc, char **argv){
         char symbol = fgetc(file_in);
         begin_pos++;
 
-        if (!isalpha(symbol)){
-            putc(symbol, file_out);
-        }
-        else
+        if (isalpha(symbol))
             break;
+
+        putc(symbol, file_out);
     }
     
     begin_pos--;
