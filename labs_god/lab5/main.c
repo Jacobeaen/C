@@ -9,7 +9,7 @@ void copyWords(char *src, char *dst);
 void appendWordsInArray(FILE *file, char *array[], size_t size);
 void printArray(char *array[], size_t size);
 int getWordsAmount(FILE *file);
-void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size);
+void changeAndWrite(FILE *file_in, FILE *file_out, char *words1[], char *words2[], size_t size);
 void Clear(char word[], size_t size);
 int getIndex(char *word, char *array[], size_t size);
 void setFree(char *array[], size_t size);
@@ -47,16 +47,16 @@ int main(int argc, char** argv)
     rewind(words1);
     //fseek(words1, 0, SEEK_SET);
 
-    char *array_1[size];
-    appendWordsInArray(words1, array_1, size);
+    char *words1[size];
+    appendWordsInArray(words1, words1, size);
 
-    char *array_2[size];
-    appendWordsInArray(words2, array_2, size);
+    char *words2[size];
+    appendWordsInArray(words2, words2, size);
 
-    changeAndWrite(file_in, file_out, array_1, array_2, size);
+    changeAndWrite(file_in, file_out, words1, words2, size);
     
-    setFree(array_1, size);
-    setFree(array_2, size);
+    setFree(words1, size);
+    setFree(words2, size);
 
     fclose(file_in);
     fclose(words1);
@@ -107,15 +107,14 @@ void appendWordsInArray(FILE *file, char *array[], size_t size){
     char string[max_word_len];
 
     int len;
+    
     int i = 0;
-
     while (!feof(file)){
         fgets(string, max_word_len, file);
         
         delSpace(string);
         len = strlen(string);
 
-        // 1 оставляем для символа '\0'
         char *word = malloc(len * sizeof(char) + 1);
         copyWords(string, word);
 
@@ -143,7 +142,7 @@ int getIndex(char *word, char *array[], size_t size){
 }
 
 // Записываем слова в файл file_out.txt
-void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_2[], size_t size){
+void changeAndWrite(FILE *file_in, FILE *file_out, char *words1[], char *words2[], size_t size){
     char word[max_word_len];
 
     char symbol;
@@ -160,12 +159,12 @@ void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_
         else if (ispunct(symbol) || isspace(symbol) || symbol == EOF){
             word[i] = '\0';
 
-            int index = getIndex(word, array_1, size);
+            int index = getIndex(word, words1, size);
             
             // Если слово найдено - заменяем
             if (index != -1)
-                //printf("%s", array_2[index]);
-                fprintf(file_out, "%s", array_2[index]);
+                //printf("%s", words2[index]);
+                fprintf(file_out, "%s", words2[index]);
             else
                 //printf("%s", word);
                 fprintf(file_out, "%s", word);
@@ -179,6 +178,17 @@ void changeAndWrite(FILE *file_in, FILE *file_out, char *array_1[], char *array_
             Clear(word, strlen(word));
             i = 0;
         }
+    }
+
+    word[i] = '\0';
+    if (strlen(word) > 0)
+    {
+        int index = getIndex(word, words1, size);
+
+        if (index != -1)
+            fprintf(file_out, "%s", words2[index]);
+        else
+            fprintf(file_out, "%s", word);
     }
 }
 
