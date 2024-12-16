@@ -14,11 +14,9 @@ void print_changed_word(FILE *words2, FILE *file_out);
 void print_char(FILE *file);
 
 int begin_pos;
-int pos_in, pos1, pos3;
+int pos_in, pos1;
 int word_num;
 
-bool was_printed = false;
-bool begin_of_word = true;
 bool end_of_file2 = false;
 bool end_of_file1 = false;
 bool match; 
