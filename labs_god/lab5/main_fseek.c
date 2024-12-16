@@ -8,14 +8,16 @@ void delSpace(char *);
 bool check_word(FILE *file1, FILE *file3);
 void change(FILE *file1, FILE *file2, FILE *file3, FILE *file4);
 void get_next_word(FILE *file);
-void get_next_f1_word(FILE *file);
-void print_unchanged_word(FILE *file);
-void print_changed_word(FILE *file);
+void get_next_f1_word(FILE *file_in, FILE *file_out);
+void print_unchanged_word(FILE *file_in, FILE *file_out);
+void print_changed_word(FILE *words2, FILE *file_out);
+void print_char(FILE *file);
 
 int begin_pos;
 int pos_in, pos1, pos3;
 int word_num;
 
+bool was_printed = false;
 bool begin_of_word = true;
 bool end_of_file2 = false;
 bool end_of_file1 = false;
@@ -24,22 +26,34 @@ bool match;
 FILE *file_in_copy;
 int main(int argc, char **argv){
 
-    // if (argc != 5){
-    //     puts("Invalid amount of paremetrs");
-    //     return 0;
-    // }
+    if (argc != 5){
+        puts("Invalid amount of paremetrs");
+        return 0;
+    }
 
-    // FILE *file_in = fopen(argv[1], "r");
-    // FILE *words1 = fopen(argv[2], "r");
-    // FILE *words2 = fopen(argv[3], "r");
-    // FILE *file_out = fopen(argv[4], "w");
+    FILE *file_in = fopen(argv[1], "r");
+    FILE *words1 = fopen(argv[2], "r");
+    FILE *words2 = fopen(argv[3], "r");
+    FILE *file_out = fopen(argv[4], "w");
 
-    FILE *file_in = fopen("file_in.txt", "r");
+    // FILE *file_in = fopen("file_in.txt", "r");
+    // FILE *words1 = fopen("words1.txt", "r");
+    // FILE *words2 = fopen("words2.txt", "r");
+    // FILE *file_out = fopen("e.txt", "w");
 
+    while (true){
+        char symbol = fgetc(file_in);
+        begin_pos++;
 
-    FILE *words1 = fopen("words1.txt", "r");
-    FILE *words2 = fopen("words2.txt", "r");
-    FILE *file_out = fopen("e.txt", "w");
+        if (!isalpha(symbol)){
+            putc(symbol, file_out);
+        }
+        else
+            break;
+    }
+    
+    begin_pos--;
+    fseek(file_in, -1, SEEK_CUR);
 
     change(file_in, words1, words2, file_out);
 
@@ -69,14 +83,12 @@ void change(FILE *file1, FILE *file2, FILE *file3, FILE *file4){
             // Если не совпало, возвращаем каретку к исходному слову
             fseek(file1, begin_pos, SEEK_SET);
             pos1 = begin_pos;
-
         }
         /* После завершения pos1 указывает на:
         Пробельный символ после слова, если слово найдено
         ВСЕГДА, так как делается проверка после конца words1
         begin_pos - на начало слова */
 
-        //printf("%d %d\n", pos1, begin_pos);
         // Приводим words2 в начальное состояние
         rewind(file2);
         end_of_file2 = false;
@@ -88,21 +100,19 @@ void change(FILE *file1, FILE *file2, FILE *file3, FILE *file4){
             fseek(file1, -1, SEEK_CUR);
             begin_pos = pos1 - 1;
 
-            print_changed_word(file3);
+            print_changed_word(file3, file4);
             rewind(file3);
-            get_next_f1_word(file1);
+            get_next_f1_word(file1, file4);
         }
 
         // Если не нашли - просто переходим к новому слову
         else{
-            print_unchanged_word(file1);
-            get_next_f1_word(file1);
+            print_unchanged_word(file1, file4);
+            get_next_f1_word(file1, file4);
 
             // Если не совпало, то pos1 - gthds
             pos1 = begin_pos;
         }
-
-        //printf("%d - %d\n", pos1, begin_pos);
     }
 }
 
@@ -124,10 +134,10 @@ void get_next_word(FILE *file){
 }
 
 // Принтуем слово, если оно не заменяется.
-void print_unchanged_word(FILE *file){
+void print_unchanged_word(FILE *file_in, FILE *file_out){
     char symbol;
     while (true){
-        symbol = fgetc(file);
+        symbol = fgetc(file_in);
         begin_pos++;
 
         if (symbol == EOF)
@@ -136,61 +146,64 @@ void print_unchanged_word(FILE *file){
         if (isspace(symbol))
             break;
 
-        printf("[%c]", symbol);
+        putc(symbol, file_out);
 
     }
 
     begin_pos--;
-    fseek(file, -1, SEEK_CUR);
+    fseek(file_in, -1, SEEK_CUR);
 }
 
 // Принтуем слово, если оно заменяется
-void print_changed_word(FILE *file){
+void print_changed_word(FILE *words2, FILE *file_out){
     
     char symbol;
     int count = 0;
 
     if (word_num == 0){
-        while ((symbol = fgetc(file)) != '\n')
-            printf("(%c)", symbol);
+        while ((symbol = fgetc(words2)) != '\n')
+            putc(symbol, file_out);
     }
 
     else{
         while (count < word_num){
-            symbol = fgetc(file);
+            symbol = fgetc(words2);
 
             if (symbol == '\n')
                 count++;
         }
 
         while (true){
-            symbol = fgetc(file);
+            symbol = fgetc(words2);
 
             if (symbol == EOF || symbol == '\n')
                 return;
 
-            printf("(%c)", symbol);
+            putc(symbol, file_out);
         }
     }
+    begin_pos++;
 }
 
 // Переходим к следующему слову в file_in (между словами много пробельных символов)
-void get_next_f1_word(FILE *file){
+void get_next_f1_word(FILE *file_in, FILE *file_out){
     char symbol;
 
     while (true){
-        symbol = fgetc(file);
+        symbol = fgetc(file_in);
         begin_pos++;
-    
-        // if (symbol == '\n'){
-        //     puts("{YES}");
-        //     continue;
-        // }
+
+        if (symbol == EOF)
+            exit(0);
+
+        if (symbol == '\n'){
+            begin_pos++;
+        }
 
         if (isalpha(symbol))
             break;
-        
-        printf("{%c}", symbol);
+
+        putc(symbol, file_out);
 
     }
 
@@ -198,7 +211,7 @@ void get_next_f1_word(FILE *file){
     мы получали первый символ следующего слова*/
 
     begin_pos--;
-    fseek(file, -1, SEEK_CUR);
+    fseek(file_in, -1, SEEK_CUR);
 }
 
 // Проверяем совпадение слова
@@ -207,6 +220,7 @@ bool check_word(FILE *file1, FILE *file2){
     char symbol1 = fgetc(file1);
     pos1++;
     char symbol2 = fgetc(file2);
+    
 
     // Условия выхода из цикла прописаны в конце тела цикла
     while (true){
@@ -244,6 +258,14 @@ bool check_word(FILE *file1, FILE *file2){
         symbol2 = fgetc(file2);
 
 
+        if (!isalpha(symbol1)){
+            if (symbol2 == EOF || symbol2 == '\n'){
+                end_of_file2 = true;
+                return true;
+            }
+            return false;
+        }
+
         // Если конец file_in
         if (symbol1 == EOF){
             end_of_file1 = true;
@@ -255,6 +277,7 @@ bool check_word(FILE *file1, FILE *file2){
         // Если конец файла words2
         if (symbol2 == EOF){
             end_of_file2 = true;
+            
             if (isspace(symbol1) || symbol1 == EOF)
                 return true;
             return false;
@@ -291,4 +314,10 @@ void delSpace(char *string){
         i++;
     }
     string[i] = '\0';
+}
+
+void print_char(FILE *file){
+    printf("%d - %c", begin_pos, fgetc(file));
+    fseek(file, -1, SEEK_CUR);
+    
 }
