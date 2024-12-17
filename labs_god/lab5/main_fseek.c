@@ -21,7 +21,6 @@ bool end_of_file2 = false;
 bool end_of_file1 = false;
 bool match; 
 
-FILE *file_in_copy;
 int main(int argc, char **argv){
 
     if (argc != 5){
@@ -311,10 +310,4 @@ void delSpace(char *string){
         i++;
     }
     string[i] = '\0';
-}
-
-void print_char(FILE *file){
-    printf("%d - %c", begin_pos, fgetc(file));
-    fseek(file, -1, SEEK_CUR);
-    
 }
