@@ -33,6 +33,7 @@ void slice(char *str, char *new_str, int start, int end)
 int get_begin_index(char *str1, char *str2, int len1, int len2)
 {
     int end1 = len1 - 1;
+    
     int start2 = 0;
     int step = 0;
 
@@ -52,6 +53,7 @@ int get_begin_index(char *str1, char *str2, int len1, int len2)
 
 }
 
+// Склейка строк и добавление в массив
 void write_in_result(char *str1, char* str2, char result[], int start_index, int end_index){
     strcat(result, str1);
     slice(str2, str2, start_index, end_index);
@@ -82,7 +84,6 @@ int main(void)
         clear(string2, len2);
         clear(string1, len1);
     }
-
     
     int i = 0;
     while (result[i]) {
